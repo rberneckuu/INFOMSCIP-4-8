@@ -3,7 +3,8 @@ class Triangle:
     def __init__(self, points):
         self.points = points
 
-    def point_in_triangle(self, scatter_point):  
+
+    def __contains__(self, scatter_point):
         v1, v2, v3 = self.points     
         d1 = self.__sign_point(scatter_point, v1, v2)
         d2 = self.__sign_point(scatter_point, v2, v3)
