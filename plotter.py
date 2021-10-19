@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import cm
 
 class ClassificationPlotter:
 
@@ -19,7 +21,9 @@ class ClassificationPlotter:
     def __plot_points(self):
         x, y = self.__distribution.get_x_y()
         labels = self.__distribution.label_points(self.__triangle)
-        plt.scatter(x, y, c=labels)
+        
+        colormap = cm.get_cmap('coolwarm')
+        plt.scatter(x, y, c=labels, cmap=colormap)
 
 
     def __plot_triangle(self):
