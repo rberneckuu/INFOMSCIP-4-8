@@ -1,5 +1,6 @@
 import random
 import numpy as np
+
 class PointDistribution:
 
     def __init__(self, size, quantity, outlier_prob):

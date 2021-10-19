@@ -2,8 +2,6 @@ from point_distribution import PointDistribution
 
 from triangle import Triangle
 from plotter import ClassificationPlotter
-import matplotlib.pyplot as plt
-import numpy as np
 
 from sklearn.neighbors import KNeighborsClassifier
 
