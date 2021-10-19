@@ -6,7 +6,6 @@ class PointDistribution:
         self.size = size
         self.__points = self.__generate_distribution(quantity)
         self.__outlier_prob = outlier_prob
-        print(self.__points)
 
     def __getitem__(self, n):
         return self.__points[n]
