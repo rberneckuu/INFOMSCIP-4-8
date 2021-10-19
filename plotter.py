@@ -4,9 +4,10 @@ from matplotlib import cm
 
 class ClassificationPlotter:
 
-    def __init__(self, distribution, triangle):
+    def __init__(self, distribution, triangle, labels):
         self.__distribution = distribution
         self.__triangle = triangle
+        self.__labels = labels
 
     def show(self):
         self.__plot_triangle()
@@ -20,10 +21,9 @@ class ClassificationPlotter:
 
     def __plot_points(self):
         x, y = self.__distribution.get_x_y()
-        labels = self.__distribution.label_points(self.__triangle)
         
         colormap = cm.get_cmap('coolwarm')
-        plt.scatter(x, y, c=labels, cmap=colormap)
+        plt.scatter(x, y, c=self.__labels, cmap=colormap)
 
 
     def __plot_triangle(self):
