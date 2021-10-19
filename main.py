@@ -8,7 +8,7 @@ import numpy as np
 def main():
     """ Main program """ 
 
-    points = PointDistribution(10, 100, 0)
+    points = PointDistribution(10, 100, 0.01)
     triangle = Triangle([[3,3], [7,3], [7,7]])
     
     plotter = ClassificationPlotter(points, triangle)
