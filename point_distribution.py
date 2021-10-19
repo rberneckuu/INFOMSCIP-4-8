@@ -30,7 +30,7 @@ class PointDistribution:
         y = [point[1] for point in self]
         return x, y
 
-    def label_points(self, triangle):
+    def get_labels(self, triangle):
         labels = np.array([self.__get_label(point, triangle) for point in self])
         return labels            
 
