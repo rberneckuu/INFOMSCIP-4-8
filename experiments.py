@@ -1,11 +1,8 @@
 import numpy as np
-from scipy.stats import distributions
-from plotter import ClassificationPlotter
 from point_distribution import PointDistribution
 from triangle import Triangle
 
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 
 # INITIALIZE CONSTANTS
 # 
@@ -44,10 +41,11 @@ EXP3_TRIANGLES = [
 
 def run_experiment(num_points=NUM_POINTS, outlier_prob=OUTLIER_PROB, num_neighbors=NUM_NEIGHBORS, triangle=BASIC_TRIANGLE):
 
+    # Generate a distribution with labels.
     distribution = PointDistribution(FIELD_SIZE, num_points, outlier_prob)
     labels = distribution.get_labels(triangle)
 
-    # Fit 
+    # Fit k-neirest neighbor classifier on our generated distribution
     knn = KNeighborsClassifier(n_neighbors=num_neighbors)
     knn.fit(distribution, labels)
 
@@ -78,39 +76,12 @@ def run_experiments(alternative_variables, variable_key):
 # Generates data for experiment one. Alternates the num_points variable.
 def experiment_1():
     return run_experiments(EXP1_NUM_POINTS, "num_points")
-    # shape = (len(EXP1_NUM_POINTS), 2, NUM_TEST_POINTS)
-    # data = np.ndarray(shape, dtype=bool)
-
-    # for idx, num_points in enumerate(EXP1_NUM_POINTS):
-    #     pred_labels, true_labels = run_experiment(num_points=num_points)
-    #     data[idx] = (pred_labels, true_labels)
-
-    # # TODO: do something with this data.
-    # return data
 
 # Generates data for experiment two. Alternates the outlier probability variable.
 def experiment_2():
     return run_experiments(EXP2_OUTLIER_PROB, "outlier_prob")
-    # shape = (len(EXP2_OUTLIER_PROB), 2, NUM_TEST_POINTS)
-    # data = np.ndarray(shape, dtype=bool)
-
-    # for idx, outlier_prob in enumerate(EXP2_OUTLIER_PROB):
-    #     pred_labels, true_labels = run_experiment(outlier_prob=outlier_prob)
-    #     data[idx] = (pred_labels, true_labels)
-
-    # # TODO: Do something with this data.
-    # return data
 
 # Generates data for experiment three. Alternates the triangle (shape) variable.
 def experiment_3():
     return run_experiments(EXP3_TRIANGLES, "triangle")
-    # shape = (len(EXP3_TRIANGLES), 2, NUM_TEST_POINTS)
-    # data = np.ndarray(shape, dtype=bool)
-
-    # for idx, triangle in enumerate(EXP3_TRIANGLES):
-    #     pred_labels, true_labels = run_experiment(triangle=triangle)
-    #     data[idx] = (pred_labels, true_labels)
-    
-    # # TODO: Do something with this data.
-    # return data
 
