@@ -73,13 +73,13 @@ def run_experiments(alternative_variables, variable_key):
     # Case, Score, run
     # Loop over all alternative variables and run an experiment with them.
     for idx, variable in enumerate(alternative_variables):
-        print(f"Starting case {idx} with {variable_key} = {variable}")
+        print(f"Starting case {idx + 1} with {variable_key} = {variable}")
 
         # 4 lists for accuracy, precision, recall and f1 scores.
         score_runs = [[], [], [], []]
 
         for run in range(TEST_RUNS):
-            print(f"Run {run}")
+            print(f"Run {run + 1}")
 
             # Put the key and variable in a dictionary, then unpack it to pass the keyword parameter.
             # Get the predicted labels, along with the true labels.
