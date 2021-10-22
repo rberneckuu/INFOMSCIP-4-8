@@ -1,12 +1,15 @@
 import numpy as np
+import xarray as xr
 from point_distribution import PointDistribution
 from triangle import Triangle
 
 from sklearn.neighbors import KNeighborsClassifier
+from analysis import get_scores
 
 # INITIALIZE CONSTANTS
 # 
 # BASE EXPERIMENT PARAMETERS
+TEST_RUNS = 20
 FIELD_SIZE = 10
 NUM_TEST_POINTS = 10000
 
@@ -59,19 +62,53 @@ def run_experiment(num_points=NUM_POINTS, outlier_prob=OUTLIER_PROB, num_neighbo
 # Run a generic experiment, altering one variable while keeping the others the same.
 def run_experiments(alternative_variables, variable_key):
 
+    # Prepare experiment labels for the eventual export to excel.
+    experiment_labels = [f"Case {i + 1}" for i in range(len(alternative_variables))]
+    score_labels = [f"Accuracy", "Precision", "Recall", "F1"]
+    run_labels = [f"Run {i + 1}" for i in range(TEST_RUNS)]
+    
     # Prepare data storage.
-    shape = (len(alternative_variables), 2, NUM_TEST_POINTS)
-    data = np.ndarray(shape, dtype=bool)
+    data = []
 
+    # Case, Score, run
     # Loop over all alternative variables and run an experiment with them.
     for idx, variable in enumerate(alternative_variables):
+        print(f"Starting case {idx} with {variable_key} = {variable}")
 
-        # Put the key and variable in a dictionary, then unpack it to pass the keyword parameter.
-        # Get the predicted labels, along with the true labels.
-        pred_labels, true_labels = run_experiment(**{variable_key: variable})
-        data[idx] = (pred_labels, true_labels)
+        # 4 lists for accuracy, precision, recall and f1 scores.
+        score_runs = [[], [], [], []]
 
-    return data
+        for run in range(TEST_RUNS):
+            print(f"Run {run}")
+
+            # Put the key and variable in a dictionary, then unpack it to pass the keyword parameter.
+            # Get the predicted labels, along with the true labels.
+            pred_labels, true_labels = run_experiment(**{variable_key: variable})
+            scores = get_scores(pred_labels, true_labels)
+
+            # Assign each score to its respective list for this run.
+            for idy, score in enumerate(scores):
+                score_runs[idy].append(score)
+
+        data.append(score_runs)
+    
+    # Prepare the data as an array.
+    experiment_data = np.asarray(data)
+
+    # 3D Xarray for storing labeled data.
+    xarr = xr.DataArray(
+        data=experiment_data, 
+        dims=["Cases", "Scores", "Runs"],
+        coords=dict(
+            Cases=experiment_labels,
+            Scores=score_labels,
+            Runs=run_labels
+        )
+    )
+
+    # Series can be exported to excel.
+    series = xarr.to_series()
+    return series
 
 # Generates data for experiment one. Alternates the num_points variable.
 def experiment_1():
