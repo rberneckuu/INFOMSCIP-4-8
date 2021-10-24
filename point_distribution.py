@@ -34,7 +34,7 @@ class PointDistribution:
 
     # Labels every point in the distribution by their position in the triangle.
     # Creates outliers according to the outlier_prob value.
-    def get_labels(self, triangle, outliers=True):
+    def get_labels(self, triangle):
         labels = np.array([self.__get_label(point, triangle) for point in self])
         return labels            
 
