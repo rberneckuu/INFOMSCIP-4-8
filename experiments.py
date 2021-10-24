@@ -26,20 +26,18 @@ EXP2_OUTLIER_PROB = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
 EXP3_TRIANGLES = [
     # Normal triangles.
     # Top in the middle, right, and far right.
-    Triangle([[3,3], [7,3], [5,7]]),
-    BASIC_TRIANGLE,
-    Triangle([[3,3], [7,3], [9,7]]),
+    Triangle([[3,3], [7,3], [5,7]]), #1
+    BASIC_TRIANGLE, #2
+    Triangle([[2,3], [6,3], [8,7]]), #3
+
+    # Crooked flat triangle
+    Triangle([[1,4], [9,4], [7,6]]), #4
     
     # Elongated triangles
     # Top in the middle, right, and far right.
-    Triangle([[4,1], [6,1], [5, 9]]),
-    Triangle([[4,1], [6,1], [7, 9]]),
-    Triangle([[4,1], [6,1], [9, 9]]),
-
-    # Flat triangle
-    # Top in the middle, and right.
-    Triangle([[1,4], [9,4], [5,6]]),
-    Triangle([[1,4], [9,4], [7,6]])
+    Triangle([[4,1], [6,1], [5, 9]]), #5
+    Triangle([[3,1], [5,1], [7, 9]]), #6
+    Triangle([[2,1], [4,1], [8, 9]]), #7
 ]
 
 def run_experiment(num_points=NUM_POINTS, outlier_prob=OUTLIER_PROB, num_neighbors=NUM_NEIGHBORS, triangle=BASIC_TRIANGLE):
